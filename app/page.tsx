@@ -36,13 +36,13 @@ export default function Home() {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
+    const { key } = values;
     console.log(values);
+    checkAuth(key);
   }
 
-  const isAuthenticated = (providedKey: string): boolean => {
-    return checkAuth(providedKey);
+  const isAuthenticated = (providedKey: string) => {
+    checkAuth(providedKey);
   };
 
   return (

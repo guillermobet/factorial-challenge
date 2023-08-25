@@ -22,9 +22,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <div className="flex min-h-screen flex-col items-center justify-between p-8">
@@ -33,7 +30,6 @@ export default function RootLayout({
                 src={factorialLogo}
                 alt="FactorialHR Logo"
                 placeholder="blur"
-                width={40}
                 height={40}
               />
               <span>FactorialHR Challenge</span>
