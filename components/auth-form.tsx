@@ -15,8 +15,6 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { checkAuth } from "@/app/lib/auth";
-
 const formSchema = z
   .object({
     key: z.string({
@@ -39,7 +37,7 @@ export default function AuthForm({ onSubmit }: Props) {
 
   async function onFormSubmit(values: z.infer<typeof formSchema>) {
     const { key } = values;
-    const isLogged: boolean = await checkAuth(key);
+    const isLogged: boolean = await onSubmit(key);
     console.log("IS LOGGED: ", isLogged);
   }
 
