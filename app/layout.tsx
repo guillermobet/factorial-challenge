@@ -2,7 +2,11 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import NavBar from "@/components/navbar";
+
+import Image from "next/image";
+import factorialLogo from "@/public/factorialhr.webp";
+
+// import NavBar from "@/components/navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,11 +22,26 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+      </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <div className="flex min-h-screen flex-col items-center justify-between p-8">
-            <NavBar />
-            <section>{children}</section>
+            <div className="flex flex-row items-center justify-normal">
+              <Image
+                src={factorialLogo}
+                alt="FactorialHR Logo"
+                placeholder="blur"
+                width={40}
+                height={40}
+              />
+              <span>FactorialHR Challenge</span>
+            </div>
+            {/* <NavBar /> */}
+            <section className="flex justify-center items-center flex-1 mb-32">
+              {children}
+            </section>
             <footer className="text-xs">
               Made with <span className="text-xl">👨🏻‍💻</span> by Guillermo
               Betancourt
