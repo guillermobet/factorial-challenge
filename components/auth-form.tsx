@@ -37,10 +37,10 @@ export default function AuthForm({ onSubmit }: Props) {
     },
   });
 
-  function onFormSubmit(values: z.infer<typeof formSchema>) {
+  async function onFormSubmit(values: z.infer<typeof formSchema>) {
     const { key } = values;
-    console.log(values);
-    checkAuth(key);
+    const isLogged: boolean = await checkAuth(key);
+    console.log("IS LOGGED: ", isLogged);
   }
 
   return (
