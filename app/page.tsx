@@ -1,3 +1,3 @@
 export default function Home() {
-  return <main>Holis</main>;
+  return <main></main>;
 }
