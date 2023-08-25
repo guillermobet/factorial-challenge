@@ -54,15 +54,15 @@ export default function Home() {
             name="key"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>🔑 ?</FormLabel>
+                <FormLabel>Got a 🔑 ?</FormLabel>
                 <FormControl>
-                  <Input placeholder="Please provide a key" {...field} />
+                  <Input placeholder="Enter your key here" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit</Button>
+          <Button type="submit">Validate</Button>
         </form>
       </Form>
     </div>
