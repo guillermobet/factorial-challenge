@@ -1,4 +1,7 @@
-export const checkAuth = (providedKey: string): boolean => {
-  console.log(providedKey, process.env.CLIENT_KEY, providedKey === process.env.CLIENT_KEY)
-  return providedKey === process.env.CLIENT_KEY;
+"use server";
+
+export const checkAuth = async (key: string): Promise<boolean> => {
+  return new Promise(() => {
+    process.env.CLIENT_KEY === key;
+  });
 };
