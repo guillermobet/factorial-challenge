@@ -15,13 +15,11 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const formSchema = z
-  .object({
-    key: z.string({
-      required_error: "🔑 is required",
-    }),
-  })
-  .required();
+const formSchema = z.object({
+  key: z.string().min(1, {
+    message: "🔑 is required",
+  }),
+});
 
 interface Props {
   onSubmit: (key: string) => Promise<boolean>;
@@ -38,7 +36,6 @@ export default function AuthForm({ onSubmit }: Props) {
   async function onFormSubmit(values: z.infer<typeof formSchema>) {
     const { key } = values;
     const isLogged: boolean = await onSubmit(key);
-    console.log("IS LOGGED: ", isLogged);
   }
 
   return (
