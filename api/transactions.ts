@@ -16,20 +16,18 @@ const getAggregatedTransactionsAmountInLastMonth: () => Promise<number> = cache(
     thirtyDaysAgoMidnight.setDate(thirtyDaysAgoMidnight.getDate() - 30);
 
     return (
-      (
-        await prisma.transaction.aggregate({
-          _sum: {
-            amount: true,
+      await prisma.transaction.aggregate({
+        _sum: {
+          amount: true,
+        },
+        where: {
+          createdAt: {
+            gte: thirtyDaysAgoMidnight, // Today at 00:00 UTC
+            lt: now, // Today now
           },
-          where: {
-            createdAt: {
-              gte: thirtyDaysAgoMidnight, // Today at 00:00 UTC
-              lt: now, // Today now
-            },
-          },
-        })
-      )._sum?.amount?.toNumber() ?? NaN
-    );
+        },
+      })
+    )._sum?.amount?.toNumber();
   }
 );
 
