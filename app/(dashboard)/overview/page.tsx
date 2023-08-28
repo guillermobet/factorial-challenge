@@ -10,7 +10,7 @@ import { UsersLogo } from "@/components/svg/users-logo";
 import { currencyFormatter, numberFormatter } from "@/lib/utils";
 
 import { getTotalUsers, getNewUsersCountToday } from "@/api/users";
-import { getAggregatedTransactionsInLastMonth } from "@/api/transactions";
+import { getAggregatedTransactionsAmountInLastMonth } from "@/api/transactions";
 
 interface CardProps {
   title: string;
@@ -129,7 +129,7 @@ export default async function Overview() {
   };
 
   const totalMoneyInTransactionsLastMonth: () => Promise<number> = async () => {
-    return await getAggregatedTransactionsInLastMonth();
+    return await getAggregatedTransactionsAmountInLastMonth();
   };
 
   const percentageGrowthMoney = async () => {};

@@ -7,7 +7,7 @@ const getTotalUsers: () => Promise<number> = cache(async () => {
   return await prisma.user.count();
 });
 
-const getAggregatedTransactionsInLastMonth: () => Promise<number> = cache(
+const getAggregatedTransactionsAmountInLastMonth: () => Promise<number> = cache(
   async () => {
     const now = new Date();
     const thirtyDaysAgoMidnight = new Date(now);
@@ -15,7 +15,7 @@ const getAggregatedTransactionsInLastMonth: () => Promise<number> = cache(
     thirtyDaysAgoMidnight.setHours(0, 0, 0, 0);
     thirtyDaysAgoMidnight.setDate(thirtyDaysAgoMidnight.getDate() - 30);
 
-    return (
+    const result = (
       await prisma.transaction.aggregate({
         _sum: {
           amount: true,
@@ -27,8 +27,14 @@ const getAggregatedTransactionsInLastMonth: () => Promise<number> = cache(
           },
         },
       })
-    )["_sum"].amount!.toNumber();
+    )["_sum"].amount!;
+
+    if (result) {
+      return result.toNumber();
+    } else {
+      return NaN;
+    }
   }
 );
 
-export { getAggregatedTransactionsInLastMonth };
+export { getAggregatedTransactionsAmountInLastMonth };
