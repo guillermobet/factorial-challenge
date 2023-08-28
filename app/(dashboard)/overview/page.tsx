@@ -128,9 +128,11 @@ export default async function Overview() {
       : "No new users today yet";
   };
 
-  const totalMoneyInTransactionsLastMonth: () => number = async () => {
+  const totalMoneyInTransactionsLastMonth: () => Promise<number> = async () => {
     return await getAggregatedTransactionsInLastMonth();
   };
+
+  const percentageGrowthMoney = async () => {};
 
   const cardProps: CardProps[] = [
     {
