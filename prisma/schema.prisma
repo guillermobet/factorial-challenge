@@ -14,16 +14,19 @@ datasource db {
 model User {
   id           Int           @id @default(autoincrement())
   name         String
+  email        String?       @unique
   transactions Transaction[]
   createdAt    DateTime      @default(now())
 }
 
 model Transaction {
-  id       Int    @id @default(autoincrement())
-  amount   String @default("EUR")
-  currency String
-  User     User   @relation(fields: [userId], references: [id])
-  userId   Int
+  id        Int      @id @default(autoincrement())
+  amount    Decimal  @db.Decimal(12, 2)
+  currency  String   @default("€")
+  category  String   @default("Others")
+  createdAt DateTime @default(now())
+  User      User     @relation(fields: [userId], references: [id])
+  userId    Int
 
   @@index([userId])
 }

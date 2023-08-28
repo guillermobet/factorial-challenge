@@ -32,8 +32,8 @@ export default function RootLayout({
       <html lang="en">
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-            <div className="flex min-h-screen flex-col items-center justify-between p-8">
-              <div className="flex flex-row items-center justify-normal">
+            <div className="flex flex-col items-center justify-center p-16 min-h-screen max-w-screen-2xl m-auto">
+              <div className="flex flex-row items-center w-full">
                 <Image
                   src={factorialLogo}
                   alt="FactorialHR Logo"
@@ -42,7 +42,7 @@ export default function RootLayout({
                 />
                 <span>FactorialHR Challenge</span>
               </div>
-              <section className="flex justify-center items-center flex-1 mb-32">
+              <section className="flex justify-center items-between flex-1 my-8 w-full">
                 {children}
               </section>
               <footer className="text-xs">

@@ -1,39 +1,51 @@
+"use client";
+
 import Link from "next/link";
 
-import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu";
 
 interface Route {
-  id: string;
+  href: string;
   name: string;
 }
 
 const routes: Route[] = [
   {
-    id: "overview",
+    href: "overview",
     name: "Overview",
   },
   {
-    id: "users",
+    href: "users",
     name: "Users",
   },
   {
-    id: "transactions",
+    href: "transactions",
     name: "Transactions",
   },
 ];
 
-export default function NavBar() {
+export function NavBar() {
   return (
     <nav>
-      <Menubar>
-        {routes.map((route: Route) => (
-          <MenubarMenu key={route.id}>
-            <MenubarTrigger>
-              <Link href={`/${route.id}`}>{route.name}</Link>
-            </MenubarTrigger>
-          </MenubarMenu>
-        ))}
-      </Menubar>
+      <NavigationMenu>
+        <NavigationMenuList>
+          {routes.map((route: Route) => (
+            <NavigationMenuItem key={route.href}>
+              <Link href={`/${route.href}`} legacyBehavior passHref>
+                <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                  {route.name}
+                </NavigationMenuLink>
+              </Link>
+            </NavigationMenuItem>
+          ))}
+        </NavigationMenuList>
+      </NavigationMenu>
     </nav>
   );
 }
