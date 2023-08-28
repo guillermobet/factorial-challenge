@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { dark } from "@clerk/themes";
 import { Toaster } from "@/components/ui/toaster";
+import { UserButton } from "@clerk/nextjs";
 
 import Image from "next/image";
 import factorialLogo from "@/public/factorialhr.webp";
@@ -33,14 +34,17 @@ export default function RootLayout({
         <body className={inter.className}>
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <div className="flex flex-col items-center justify-center p-16 min-h-screen max-w-screen-2xl m-auto">
-              <div className="flex flex-row items-center w-full">
-                <Image
-                  src={factorialLogo}
-                  alt="FactorialHR Logo"
-                  placeholder="blur"
-                  height={40}
-                />
-                <span>FactorialHR Challenge</span>
+              <div className="flex flex-row justify-between items-center w-full">
+                <div className="flex flex-row items-center w-full">
+                  <Image
+                    src={factorialLogo}
+                    alt="FactorialHR Logo"
+                    placeholder="blur"
+                    height={40}
+                  />
+                  <span>FactorialHR Challenge</span>
+                </div>
+                <UserButton afterSignOutUrl="/" />
               </div>
               <section className="flex justify-center items-between flex-1 my-8 w-full">
                 {children}

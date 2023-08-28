@@ -1,4 +1,3 @@
-import { UserButton } from "@clerk/nextjs";
 import { NavBar } from "@/components/navbar";
 
 export default function DashboardLayout({
@@ -8,8 +7,9 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="flex flex-col items-center gap-8 w-full">
-      {/* <UserButton afterSignOutUrl="/" /> */}
-      <NavBar />
+      <div>
+        <NavBar />
+      </div>
       <div className="w-full">{children}</div>
     </div>
   );
