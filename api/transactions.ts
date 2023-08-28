@@ -28,7 +28,7 @@ const getAggregatedTransactionsAmountInLastMonth: () => Promise<number> = cache(
             },
           },
         })
-      )._sum?.amount?.toNumber() || NaN
+      )._sum?.amount?.toNumber() ?? NaN
     );
   }
 );
