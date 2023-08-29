@@ -1,5 +1,7 @@
 "use client";
 
+import { ChartData } from "@/lib/types";
+import { bigAmountFormatter, currencyFormatter } from "@/lib/utils";
 import {
   Bar,
   BarChart as RechartsBC,
@@ -10,10 +12,7 @@ import {
 } from "recharts";
 
 type Props = {
-  chartValues: {
-    name: string;
-    total: number;
-  }[];
+  chartValues: any;
   formattingUnit?: string;
 };
 
@@ -33,7 +32,7 @@ export function BarChart({ chartValues, formattingUnit }: Props) {
           fontSize={12}
           tickLine={false}
           axisLine={false}
-          tickFormatter={(value: number) => `${value} €`}
+          tickFormatter={(value: number) => `${bigAmountFormatter(value)} €`}
         />
         <Bar dataKey="total" fill="#103FEF" radius={[4, 4, 4, 4]} />
         <Tooltip
@@ -46,7 +45,9 @@ export function BarChart({ chartValues, formattingUnit }: Props) {
             fontSize: 11,
             fontWeight: 700,
           }}
-          formatter={(value: number) => `${value}${formattingUnit || ""}`}
+          formatter={(value: number) =>
+            `${currencyFormatter(null).format(value)}${formattingUnit || ""}`
+          }
         />
       </RechartsBC>
     </ResponsiveContainer>

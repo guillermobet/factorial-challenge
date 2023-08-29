@@ -9,7 +9,7 @@ import { UsersLogo } from "@/components/svg/users-logo";
 type Props = {
   title: string;
   value: string;
-  text: string;
+  text?: string;
   children: React.ReactNode;
 };
 
@@ -22,7 +22,7 @@ export function SummaryCard({ title, value, text, children }: Props) {
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>
-        <p className="text-xs text-muted-foreground">{text}</p>
+        {text && <p className="text-xs text-muted-foreground">{text}</p>}
       </CardContent>
     </ShadcnCard>
   );
