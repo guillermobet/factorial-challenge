@@ -10,7 +10,7 @@ import { UsersLogo } from "@/components/svg/users-logo";
 import { currencyFormatter, numberFormatter } from "@/lib/utils";
 
 import { getTotalUsers, getNewUsersCountToday } from "@/api/users";
-// import { getAggregatedTransactionsAmountInLastMonth } from "@/api/transactions";
+import { getAggregatedTransactionsAmountInLastMonth } from "@/api/transactions";
 
 interface CardProps {
   title: string;
@@ -128,9 +128,9 @@ export default async function Overview() {
       : "No new users today yet";
   };
 
-  // const totalMoneyInTransactionsLastMonth: () => Promise<number> = async () => {
-  //   return await getAggregatedTransactionsAmountInLastMonth();
-  // };
+  const totalMoneyInTransactionsLastMonth: () => Promise<number> = async () => {
+    return (await getAggregatedTransactionsAmountInLastMonth()) || NaN;
+  };
 
   const percentageGrowthMoney = async () => {};
 
@@ -149,9 +149,9 @@ export default async function Overview() {
     },
     {
       title: "Total in transactions (30 days)",
-      value: "72.300,94 €", // currencyFormatter.format(
-      //   await totalMoneyInTransactionsLastMonth()
-      // ),
+      value: currencyFormatter.format(
+        await totalMoneyInTransactionsLastMonth()
+      ),
       text: "+29.7% from last month",
       logo: <CurrencyLogo />,
     },
