@@ -28,6 +28,9 @@ export default function RootLayout({
     <ClerkProvider
       appearance={{
         baseTheme: dark,
+        elements: {
+          footer: "hidden",
+        },
       }}
     >
       <html lang="en">
