@@ -5,6 +5,7 @@ import {
   CardDescription,
   CardContent,
 } from "./ui/card";
+import { Separator } from "./ui/separator";
 
 type DetailsCard = {
   title: string;
@@ -15,12 +16,29 @@ type DetailsCard = {
 
 export function DetailsCard({ title, text, className, children }: DetailsCard) {
   return (
-    <Card className={`flex flex-col gap-2 ${className}`}>
+    <Card
+      className={`flex flex-col ${className}`}
+      style={{
+        boxShadow: "inset 0 -10px 10px -10px #454545",
+        MozBoxShadow: "inset 0 -10px 10px -10px #454545",
+        WebkitBoxShadow: "inset 0 -10px 10px -10px #454545",
+      }}
+    >
       <CardHeader>
         <CardTitle className="text-md">{title}</CardTitle>
-        <CardDescription className="text-xs">{text}</CardDescription>
+        <CardDescription className="pb-2 text-xs">{text}</CardDescription>
+        <Separator className="my-0 py-0" />
       </CardHeader>
-      <CardContent>{children}</CardContent>
+
+      <CardContent
+        style={{
+          flex: "1 1 auto",
+          overflowY: "auto",
+          height: 0,
+        }}
+      >
+        {children}
+      </CardContent>
     </Card>
   );
 }

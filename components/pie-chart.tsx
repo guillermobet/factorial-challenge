@@ -2,6 +2,7 @@
 
 import {
   bigAmountFormatter,
+  categoriesEmoji,
   currencyFormatter,
   numberFormatter,
 } from "@/lib/utils";
@@ -28,17 +29,6 @@ const colors = [
   "#0a143c",
   "#070d28",
 ];
-
-const categoriesEmoji: any = {
-  "Shopping & Entertainment": "🛍️",
-  Transportation: "🚌",
-  Health: "🏥",
-  Groceries: "🛒",
-  "Restaurants & Dining": "🍽️",
-  "Home & Utilities": "🏠",
-  Insurance: "👨‍👩‍👧",
-  Others: "➕",
-};
 
 const CustomLabel = ({
   cx,

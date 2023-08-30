@@ -61,6 +61,7 @@ export function AreaChart({ chartValues }: any) {
           tickLine={true}
           axisLine={true}
           tickCount={10}
+          domain={[200000, "auto"]}
           tickFormatter={(value: number) => `${bigAmountFormatter(value)} €`}
         />
         <Tooltip cursor={false} content={<CustomTooltip />} />

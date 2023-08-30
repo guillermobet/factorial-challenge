@@ -3,6 +3,7 @@ import { SummaryCard } from "@/components/summary-card";
 import { DetailsCard } from "@/components/details-card";
 
 import {
+  categoriesEmoji,
   currencyFormatter,
   getMonthByNumber,
   numberFormatter,
@@ -111,9 +112,10 @@ export default async function Overview() {
       category: string;
       amount: number;
       currency: string;
+      createdAt: Date;
     }[]
   > = async (n: number) => {
-    const result = await getMostRecentTransactions(5);
+    const result = await getMostRecentTransactions(n);
     return result.map((row, index) => {
       return {
         id: index,
@@ -121,6 +123,7 @@ export default async function Overview() {
         category: row.category,
         amount: row.amount.toNumber(),
         currency: row.currency,
+        createdAt: row.createdAt,
       };
     });
   };
@@ -157,7 +160,7 @@ export default async function Overview() {
   ];
 
   const recentTransactions: TransactionDetails[] = await getRecentTransactions(
-    5
+    100
   );
 
   const chartData: () => Promise<ChartData[]> = async () => {
@@ -207,6 +210,7 @@ export default async function Overview() {
                   category,
                   amount,
                   currency,
+                  createdAt,
                 }: TransactionDetails) => {
                   return (
                     <div className="flex items-center" key={id}>
@@ -215,7 +219,10 @@ export default async function Overview() {
                           {name}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {category}
+                          {categoriesEmoji[category]} - {category}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          ⌚️ - {createdAt.toUTCString()}
                         </p>
                       </div>
                       <div className="ml-auto font-medium">

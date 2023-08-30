@@ -91,6 +91,7 @@ const getMostRecentTransactions: (n: number) => Promise<
     amount: Decimal;
     currency: string;
     category: string;
+    createdAt: Date;
     User: {
       name: string;
     };
@@ -101,6 +102,7 @@ const getMostRecentTransactions: (n: number) => Promise<
       amount: true,
       currency: true,
       category: true,
+      createdAt: true,
       User: {
         select: {
           name: true,

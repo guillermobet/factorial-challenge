@@ -77,10 +77,22 @@ const getMonthByNumber: (m: number) => string = (m: number) => {
   }
 };
 
+const categoriesEmoji: any = {
+  "Shopping & Entertainment": "🛍️",
+  Transportation: "🚌",
+  Health: "🏥",
+  Groceries: "🛒",
+  "Restaurants & Dining": "🍽️",
+  "Home & Utilities": "🏠",
+  Insurance: "👨‍👩‍👧",
+  Others: "➕",
+};
+
 export {
   cn,
   currencyFormatter,
   numberFormatter,
   bigAmountFormatter,
   getMonthByNumber,
+  categoriesEmoji,
 };

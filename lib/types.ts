@@ -11,6 +11,7 @@ interface TransactionDetails {
   category: string;
   amount: number;
   currency: string;
+  createdAt: Date;
 }
 
 interface ChartData {
