@@ -21,8 +21,6 @@ const getNewUsersCountToday: () => Promise<number> = cache(async () => {
   const todayMidnight = new Date(todayMidnightUTC);
   const now = new Date();
 
-  todayMidnight.setHours(0, 0, 0, 0);
-
   return prisma.user.count({
     where: {
       createdAt: {

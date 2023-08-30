@@ -1,5 +1,5 @@
 import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
-import { NavBar } from "@/components/navbar";
+import { NavBar } from "@/components/nav-bar";
 
 export default function DashboardLayout({
   children,
@@ -13,7 +13,9 @@ export default function DashboardLayout({
           <div>
             <NavBar />
           </div>
-          <div className="w-full">{children}</div>
+          <div className="flex-1 flex flex-row justify-center w-full">
+            {children}
+          </div>
         </div>
       </SignedIn>
       <SignedOut>

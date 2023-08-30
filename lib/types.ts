@@ -1,8 +1,8 @@
-interface CardProps {
+interface SummaryCardProps {
   title: string;
   value: string;
   text: string;
-  logo?: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface TransactionDetails {
@@ -18,4 +18,4 @@ interface ChartData {
   total: number;
 }
 
-export type { CardProps, TransactionDetails, ChartData };
+export type { SummaryCardProps, TransactionDetails, ChartData };

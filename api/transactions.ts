@@ -114,7 +114,7 @@ const getMostRecentTransactions: (n: number) => Promise<
   });
 });
 
-const getAverageSpendingLast30Days: () => Promise<any> = cache(async () => {
+const getAverageSpendingLast30Days: () => Promise<number> = cache(async () => {
   const date = new Date();
   const thirtyDaysAgoMidnightUTC = Date.UTC(
     date.getUTCFullYear(),
@@ -219,6 +219,194 @@ const getTrasactionVolumePerMonthLast12Months: () => Promise<
     ORDER BY year, month`);
 });
 
+const getTransactionVolumePerCategoryLast30Days: () => Promise<
+  { name: string; total: number; count: number }[]
+> = cache(async () => {
+  const date = new Date();
+  const thirtyDaysAgoMidnightUTC = Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    0,
+    0,
+    0
+  );
+
+  const thirtyDaysAgo = new Date(thirtyDaysAgoMidnightUTC);
+  const now = new Date();
+
+  thirtyDaysAgo.setHours(0, 0, 0, 0);
+  thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+  const transactionsPerCategory = await prisma.transaction.groupBy({
+    by: ["category"],
+    where: {
+      createdAt: {
+        gte: thirtyDaysAgo,
+        lt: now,
+      },
+    },
+    _sum: {
+      amount: true,
+    },
+    _count: true,
+  });
+
+  const result = transactionsPerCategory.map((row) => {
+    return {
+      name: row.category,
+      total: row._sum.amount!.toNumber(),
+      count: row._count,
+    };
+  });
+
+  return result;
+});
+
+const getTrasactionVolumePerHourLastWeek: () => Promise<
+  {
+    hour: number;
+    total: number;
+  }[]
+> = cache(async () => {
+  const date = new Date();
+  const yesterdayUTC = Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    0,
+    0,
+    0
+  );
+  const sevenDaysAgoMidnightUTC = Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    0,
+    0,
+    0
+  );
+
+  const yesterday = new Date(yesterdayUTC);
+  const sevenDaysAgo = new Date(sevenDaysAgoMidnightUTC);
+  const now = new Date();
+
+  sevenDaysAgo.setHours(0, 0, 0, 0);
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  yesterday.setHours(0, 0, 0, 0);
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const result = (await prisma.$queryRaw(Prisma.sql`
+    SELECT  HOUR(createdAt) as hour, SUM(amount) as total
+    FROM Transaction
+    WHERE createdAt > ${sevenDaysAgo} AND createdAt <= ${now}
+    GROUP BY hour
+    ORDER BY hour ASC`)) as { hour: number; total: Decimal }[];
+
+  return result.map((row: { hour: number; total: Decimal }) => {
+    return {
+      hour: row.hour,
+      total: row.total.toNumber(),
+    };
+  });
+});
+
+const getTopOfCategoryRankingLast7Days: (order: string) => Promise<{
+  name: string;
+  total: number;
+}> = cache(async (order: string) => {
+  const date = new Date();
+  const sevenDaysAgoMidnightUTC = Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    0,
+    0,
+    0
+  );
+
+  const sevenDaysAgo = new Date(sevenDaysAgoMidnightUTC);
+  const now = new Date();
+
+  sevenDaysAgo.setHours(0, 0, 0, 0);
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const transactionsPerCategory = await prisma.transaction.groupBy({
+    by: ["category"],
+    where: {
+      createdAt: {
+        gte: sevenDaysAgo,
+        lt: now,
+      },
+    },
+    _sum: {
+      amount: true,
+    },
+    orderBy: {
+      _sum: {
+        amount: order as Prisma.SortOrder,
+      },
+    },
+    take: 1,
+  });
+
+  const result = transactionsPerCategory.map((row) => {
+    return {
+      name: row.category,
+      total: row._sum.amount!.toNumber(),
+    };
+  });
+
+  return result[0];
+});
+
+const getSortedTransctionsLast7Days: (order: string) => Promise<{
+  name: string;
+  amount: number;
+}> = cache(async (order: string) => {
+  const date = new Date();
+  const sevenDaysAgoMidnightUTC = Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    0,
+    0,
+    0
+  );
+
+  const sevenDaysAgo = new Date(sevenDaysAgoMidnightUTC);
+  const now = new Date();
+
+  sevenDaysAgo.setHours(0, 0, 0, 0);
+  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+  const sortedTransactions = await prisma.transaction.findFirst({
+    select: {
+      amount: true,
+      category: true,
+    },
+    where: {
+      createdAt: {
+        gte: sevenDaysAgo,
+        lt: now,
+      },
+    },
+
+    orderBy: {
+      amount: order as Prisma.SortOrder,
+    },
+    take: 1,
+  });
+
+  const result = {
+    name: sortedTransactions!.category,
+    amount: sortedTransactions!.amount.toNumber(),
+  };
+
+  return result;
+});
+
 export {
   getAggregatedTransactionsAmountInLast30Days,
   getAggregatedTransactionsAmountInPrevious30Days,
@@ -226,4 +414,8 @@ export {
   getAverageSpendingLast30Days,
   getAverageSpendingPrevious30Days,
   getTrasactionVolumePerMonthLast12Months,
+  getTransactionVolumePerCategoryLast30Days,
+  getTrasactionVolumePerHourLastWeek,
+  getTopOfCategoryRankingLast7Days,
+  getSortedTransctionsLast7Days,
 };

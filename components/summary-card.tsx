@@ -4,16 +4,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { UsersLogo } from "@/components/svg/users-logo";
+import { SummaryCardProps } from "@/lib/types";
 
-type Props = {
-  title: string;
-  value: string;
-  text?: string;
-  children: React.ReactNode;
-};
-
-export function SummaryCard({ title, value, text, children }: Props) {
+export function SummaryCard({
+  title,
+  value,
+  text,
+  children,
+}: SummaryCardProps) {
   return (
     <ShadcnCard className="w-full">
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">

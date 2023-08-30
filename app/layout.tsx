@@ -10,8 +10,6 @@ import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import factorialLogo from "@/public/factorialhr.webp";
 
-// import NavBar from "@/components/navbar";
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -52,7 +50,7 @@ export default function RootLayout({
               <section className="flex justify-center items-between flex-1 my-8 w-full">
                 {children}
               </section>
-              <footer className="text-xs">
+              <footer className="self-end text-xs">
                 Made with <span className="text-xl">👨🏻‍💻</span> by Guillermo
                 Betancourt
               </footer>

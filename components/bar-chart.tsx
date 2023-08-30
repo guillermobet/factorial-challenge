@@ -4,7 +4,7 @@ import { ChartData } from "@/lib/types";
 import { bigAmountFormatter, currencyFormatter } from "@/lib/utils";
 import {
   Bar,
-  BarChart as RechartsBC,
+  BarChart as RechartsBarChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -12,14 +12,31 @@ import {
 } from "recharts";
 
 type Props = {
-  chartValues: any;
+  chartValues: ChartData[];
   formattingUnit?: string;
 };
 
-export function BarChart({ chartValues, formattingUnit }: Props) {
+const CustomTooltip = ({ active, payload, value }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <div className="bg-black/[.75] rounded-lg border-black p-4 gap-1">
+        <div className="flex flex-row justify-between items-baseline text-lg font-bold">
+          <p className="pb-2">{`${payload[0].payload.name}`}</p>
+          <span>🗓️</span>
+        </div>
+        <p className="text-xs">{`Total: ${currencyFormatter("EUR").format(
+          payload[0].value
+        )}`}</p>
+      </div>
+    );
+  }
+  return null;
+};
+
+export function BarChart({ chartValues }: Props) {
   return (
     <ResponsiveContainer width="100%" height="100%">
-      <RechartsBC data={chartValues}>
+      <RechartsBarChart data={chartValues as any}>
         <XAxis
           dataKey="name"
           stroke="#888888"
@@ -35,21 +52,8 @@ export function BarChart({ chartValues, formattingUnit }: Props) {
           tickFormatter={(value: number) => `${bigAmountFormatter(value)} €`}
         />
         <Bar dataKey="total" fill="#103FEF" radius={[4, 4, 4, 4]} />
-        <Tooltip
-          cursor={false}
-          contentStyle={{
-            borderRadius: 8,
-            borderColor: "black",
-            backgroundColor: "rgba(0, 0, 0, 0.75)",
-            color: "white",
-            fontSize: 11,
-            fontWeight: 700,
-          }}
-          formatter={(value: number) =>
-            `${currencyFormatter(null).format(value)}${formattingUnit || ""}`
-          }
-        />
-      </RechartsBC>
+        <Tooltip cursor={false} content={<CustomTooltip />} />
+      </RechartsBarChart>
     </ResponsiveContainer>
   );
 }

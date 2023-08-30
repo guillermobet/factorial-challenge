@@ -2,11 +2,6 @@ import { BarChart } from "@/components/bar-chart";
 import { SummaryCard } from "@/components/summary-card";
 import { DetailsCard } from "@/components/details-card";
 
-import { CardLogo } from "@/components/svg/card-logo";
-import { CurrencyLogo } from "@/components/svg/currency-logo";
-import { SignalLogo } from "@/components/svg/signal-logo";
-import { UsersLogo } from "@/components/svg/users-logo";
-
 import {
   currencyFormatter,
   getMonthByNumber,
@@ -28,7 +23,9 @@ import {
   getTrasactionVolumePerMonthLast12Months,
 } from "@/api/transactions";
 
-import { CardProps, TransactionDetails, ChartData } from "@/lib/types";
+import { SummaryCardProps, TransactionDetails, ChartData } from "@/lib/types";
+
+export const revalidate: number = 3600; // revalidate the data at most every hour
 
 export default async function Overview() {
   const newUsersSinceYesterday: () => Promise<string> = async () => {
@@ -128,18 +125,18 @@ export default async function Overview() {
     });
   };
 
-  const cardProps: CardProps[] = [
+  const summaryCardsData: SummaryCardProps[] = [
     {
       title: "Total users registered",
       value: `${numberFormatter(await getTotalUsers())} users`,
       text: await newUsersSinceYesterday(),
-      logo: <UsersLogo />,
+      children: "👤",
     },
     {
       title: "Users registered (30 days)",
       value: await newUsersLast30Days(),
       text: await newUsersPrevious30Days(),
-      logo: <SignalLogo />,
+      children: "📈",
     },
     {
       title: "Total in transactions (30 days)",
@@ -147,7 +144,7 @@ export default async function Overview() {
         await totalMoneyInTransactionsLast30Days()
       ),
       text: await percentageRevenueGrowth(),
-      logo: <CurrencyLogo />,
+      children: "💶",
     },
     {
       title: "Average user spending (30 days)",
@@ -155,7 +152,7 @@ export default async function Overview() {
         await getAverageSpendingLast30Days()
       ),
       text: await percentageAverageSpendingGrowth(),
-      logo: <CardLogo />,
+      children: "💳",
     },
   ];
 
@@ -177,22 +174,25 @@ export default async function Overview() {
 
   return (
     <>
-      <div className="flex flex-col gap-12">
+      <div className="flex-1 flex flex-col justify-center gap-12">
         <div className="flex flex-row justify-center gap-8">
-          {cardProps.map(({ logo, ...props }: CardProps) => {
+          {summaryCardsData.map(({ children, ...props }: SummaryCardProps) => {
             return (
               <SummaryCard {...props} key={props.title}>
-                {logo}
+                {children}
               </SummaryCard>
             );
           })}
         </div>
         <div className="flex flex-row gap-16">
           <div className="flex flex-col w-4/6 gap-16">
-            <p className="text-xl ml-4 font-medium leading-none">
-              Transactions (last 12 months)
-            </p>
-            <BarChart chartValues={await chartData()} formattingUnit={"€"} />
+            <div className="flex flex-col gap-2">
+              <p className="text-xl font-medium leading-none">
+                Transactions overview
+              </p>
+              <p className="text-xs text-gray-500">(last 12 months)</p>
+            </div>
+            <BarChart chartValues={await chartData()} />
           </div>
           <DetailsCard
             title="Recent transactions"
