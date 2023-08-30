@@ -184,8 +184,8 @@ export default async function Overview() {
             );
           })}
         </div>
-        <div className="flex flex-row gap-16">
-          <div className="flex flex-col w-4/6 gap-16">
+        <div className="flex-1 flex flex-row gap-16">
+          <div className="flex flex-col w-2/3 gap-16">
             <div className="flex flex-col gap-2">
               <p className="text-xl font-medium leading-none">
                 Transactions overview
@@ -197,7 +197,7 @@ export default async function Overview() {
           <DetailsCard
             title="Recent transactions"
             text="Most recent transactions are shown"
-            className="w-2/6"
+            className="w-1/3"
           >
             <div className="space-y-8">
               {recentTransactions.map(
