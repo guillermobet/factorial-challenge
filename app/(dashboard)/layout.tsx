@@ -1,5 +1,7 @@
 import { RedirectToSignIn, SignedIn, SignedOut } from "@clerk/nextjs";
 import { NavBar } from "@/components/nav-bar";
+import { Suspense } from "react";
+import Loading from "./loading";
 
 export default function DashboardLayout({
   children,
@@ -14,7 +16,7 @@ export default function DashboardLayout({
             <NavBar />
           </div>
           <div className="flex-1 flex flex-row justify-center w-full">
-            {children}
+            <Suspense fallback={<Loading />}>{children}</Suspense>
           </div>
         </div>
       </SignedIn>

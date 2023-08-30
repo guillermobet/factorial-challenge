@@ -26,7 +26,7 @@ const routes: Route[] = [
   },
 ];
 
-export function NavBar() {
+export async function NavBar() {
   return (
     <NavigationMenu>
       <NavigationMenuList>
