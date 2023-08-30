@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload }: any) => {
           <p className="pb-2">{`From ${payload[0].payload.hour}:00 to ${payload[0].payload.hour}:59`}</p>
           <span>⌚️</span>
         </div>
-        <p className="text-xs">{`Total in transaction: ${currencyFormatter(
+        <p className="text-xs">{`Total in transactions: ${currencyFormatter(
           "EUR"
         ).format(payload[0].value)}`}</p>
       </div>

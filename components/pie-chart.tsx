@@ -40,37 +40,39 @@ const categoriesEmoji: any = {
   Others: "➕",
 };
 
-const renderCustomLabel = ({
+const CustomLabel = ({
   cx,
   cy,
   midAngle,
   innerRadius,
   outerRadius,
   percent,
-  index,
+  name,
 }: any) => {
   const radius = innerRadius + (outerRadius - innerRadius) * 0.6;
   const x = cx + radius * Math.cos((-midAngle * Math.PI) / 180);
   const y = cy + radius * Math.sin((-midAngle * Math.PI) / 180);
 
   return (
-    <text
-      x={x}
-      y={y}
-      fontSize={13}
-      fill="white"
-      textAnchor={"middle"}
-      dominantBaseline="central"
-    >
-      {`${(percent * 100).toFixed(2)}%`}
-    </text>
+    <>
+      <text
+        x={x}
+        y={y}
+        fontSize={12}
+        fill="white"
+        textAnchor={"middle"}
+        dominantBaseline="central"
+      >
+        {`${categoriesEmoji[name]}: ${(percent * 100).toFixed(2)}%`}
+      </text>
+    </>
   );
 };
 
 const CustomTooltip = ({ active, payload, value }: any) => {
   if (active && payload && payload.length) {
     return (
-      <div className="flex flex-col bg-black/[.75] rounded-lg border-black p-4 gap-1">
+      <div className="flex flex-col bg-black/[.90] rounded-lg border-black p-4 gap-1">
         <div className="flex flex-row justify-between items-baseline text-lg font-bold gap-4">
           <p className="pb-2">{`${payload[0].payload.name}`}</p>
           <span className="">{categoriesEmoji[payload[0].payload.name]}</span>
@@ -95,13 +97,14 @@ export function PieChart({ chartValues, formattingUnit }: Props) {
           data={chartValues}
           cx={"50%"}
           cy={"50%"}
-          innerRadius={20}
+          innerRadius={35}
           outerRadius={160}
           labelLine={false}
-          label={renderCustomLabel}
+          label={<CustomLabel />}
           fill="#020817"
           dataKey="total"
-          stroke="none"
+          stroke="#020817"
+          strokeWidth={5}
           width={100}
           height={100}
         >
