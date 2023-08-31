@@ -178,7 +178,7 @@ export default async function Overview() {
   return (
     <>
       <div className="flex-1 flex flex-col justify-center gap-12">
-        <div className="flex flex-row justify-center gap-8">
+        <div className="h-1/4 flex flex-row justify-center gap-8">
           {summaryCardsData.map(({ children, ...props }: SummaryCardProps) => {
             return (
               <SummaryCard {...props} key={props.title}>
@@ -187,7 +187,7 @@ export default async function Overview() {
             );
           })}
         </div>
-        <div className="flex-1 flex flex-row gap-16">
+        <div className="h-3/4 flex flex-row gap-16">
           <div className="flex flex-col w-2/3 gap-16">
             <div className="flex flex-col gap-2">
               <p className="text-xl font-medium leading-none">

@@ -15,7 +15,7 @@ const CustomTooltip = ({ active, payload }: any) => {
     return (
       <div className="flex flex-col bg-black/[.75] rounded-lg border-black p-4 gap-1">
         <div className="flex flex-row justify-between items-baseline text-lg font-bold gap-4">
-          <p className="pb-2">{`From ${payload[0].payload.hour}:00 to ${payload[0].payload.hour}:59`}</p>
+          <p className="pb-2">{`${payload[0].payload.hour}:00 - ${payload[0].payload.hour}:59`}</p>
           <span>⌚️</span>
         </div>
         <p className="text-xs">{`Total in transactions: ${currencyFormatter(

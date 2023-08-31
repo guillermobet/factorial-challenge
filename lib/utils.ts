@@ -78,7 +78,8 @@ const getMonthByNumber: (m: number) => string = (m: number) => {
 };
 
 const categoriesEmoji: any = {
-  "Shopping & Entertainment": "🛍️",
+  Shopping: "🛍️",
+  Entertainment: "🍿",
   Transportation: "🚌",
   Health: "🏥",
   Groceries: "🛒",

@@ -1,13 +1,13 @@
 "use client";
 
 import {
-  bigAmountFormatter,
   categoriesEmoji,
   currencyFormatter,
   numberFormatter,
 } from "@/lib/utils";
 import {
   Cell,
+  Label,
   Pie,
   PieChart as RechartsPieChart,
   ResponsiveContainer,
@@ -16,10 +16,10 @@ import {
 
 type Props = {
   chartValues: any;
-  formattingUnit?: string;
 };
 
 const colors = [
+  "#3654d9",
   "#1f3bb3",
   "#1b359f",
   "#182e8b",
@@ -30,7 +30,7 @@ const colors = [
   "#070d28",
 ];
 
-const CustomLabel = ({
+const CustomChunkLabel = ({
   cx,
   cy,
   midAngle,
@@ -79,7 +79,7 @@ const CustomTooltip = ({ active, payload, value }: any) => {
   return null;
 };
 
-export function PieChart({ chartValues, formattingUnit }: Props) {
+export function PieChart({ chartValues }: Props) {
   return (
     <ResponsiveContainer width="100%" height="100%">
       <RechartsPieChart>
@@ -90,7 +90,7 @@ export function PieChart({ chartValues, formattingUnit }: Props) {
           innerRadius={35}
           outerRadius={160}
           labelLine={false}
-          label={<CustomLabel />}
+          label={<CustomChunkLabel />}
           fill="#020817"
           dataKey="total"
           stroke="#020817"
