@@ -18,13 +18,13 @@ const bigAmountFormatter: (n: number) => string = (n: number) => {
     if (n < 1000) {
       return n.toString();
     } else if (n >= 1000 && n < 1_000_000) {
-      return (n / 1000).toFixed(1).replace(/\.0$/, "") + "K";
+      return (n / 1000).toFixed(0).replace(/\.0$/, "") + "K";
     } else if (n >= 1_000_000 && n < 1_000_000_000) {
-      return (n / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+      return (n / 1_000_000).toFixed(0).replace(/\.0$/, "") + "M";
     } else if (n >= 1_000_000_000 && n < 1_000_000_000_000) {
-      return (n / 1_000_000_000).toFixed(1).replace(/\.0$/, "") + "B";
+      return (n / 1_000_000_000).toFixed(0).replace(/\.0$/, "") + "B";
     } else {
-      return (n / 1_000_000_000_000).toFixed(1).replace(/\.0$/, "") + "T";
+      return (n / 1_000_000_000_000).toFixed(0).replace(/\.0$/, "") + "T";
     }
   }
 };
